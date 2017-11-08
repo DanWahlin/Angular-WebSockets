@@ -16,7 +16,7 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.sub = this.dataService.getQuotes()
         .subscribe(quote => {
-          this.stockQuote = quote
+          this.stockQuote = quote;
         });
   }
 
