@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 import { map, catchError } from 'rxjs/operators';
+import * as socketIo from 'socket.io-client';
 
 import { Socket } from '../shared/interfaces';
 
@@ -16,7 +17,7 @@ export class DataService {
   observer: Observer<number>;
 
   getQuotes() : Observable<number> {
-    this.socket = io.connect('http://localhost:8080');
+    this.socket = socketIo('http://localhost:8080');
 
     this.socket.on('data', (res) => {
       this.observer.next(res.data);
@@ -26,7 +27,7 @@ export class DataService {
   }
 
   createObservable() : Observable<number> {
-      return Observable.create((observer: Observer<number>) => {
+      return new Observable<number>(observer => {
         this.observer = observer;
       });
   }
